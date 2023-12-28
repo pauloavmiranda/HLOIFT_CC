@@ -1,0 +1,81 @@
+
+#define APPDEBUG  0
+
+
+#ifndef _HLOIFT_H_
+#define _HLOIFT_H_
+
+#include "gft.h"
+
+
+gft::sLayeredGraph *HL_OIFT_CreateGraph(gft::sImageGraph *graph,
+					gft::sCImage *cimg,
+					gft::sImage32 *img,
+					float radius,
+					char *hierarchy,
+					int **p_hr,
+					int *p_Wmax,
+					gft::sImage32 **p_P,
+					int x, int y);
+
+int *HL_OIFT_CreateSeeds(gft::sLayeredGraph *lg,
+			 int *hr,
+			 int *S,
+			 gft::sImage32 *label,
+			 int **p_lg_label);
+
+int *IndexesOfAntiparallelArcs(gft::sLayeredGraph *lg);
+
+
+//----------------------------------------
+
+void HL_OIFT_Segmentation(gft::sLayeredGraph *lg,
+			  int Wmax,
+			  int *hr,
+			  int *S,
+			  gft::sImage32 *label);
+
+void HL_OIFT_Algorithm(gft::sLayeredGraph *lg,
+		       int Wmax, int *S, int *L, int *hr);
+
+//----------------------------------------
+
+void Prune_Pixels_For_Closeness(int r,
+				int cr_L,
+				gft::sImage32 *C,
+				gft::sImage32 *P,
+				int *L,
+				gft::sPQueue32 *Q,
+				gft::sAdjRel *A,
+				int *T);
+
+
+void Conquest_Support_Pixel_For_Closeness(int v,
+					  int cr_L,
+					  gft::sImage32 *C,
+					  gft::sImage32 *P,
+					  int *L,
+					  gft::sPQueue32 *Q);
+
+gft::sImage32 *Get_Geodesic_Distance(gft::sImage32 *pred,
+				     gft::sAdjRel *A);
+
+void HL_OIFT_Closeness_Segmentation(gft::sLayeredGraph *lg,
+				    int Wmax,
+				    int *hr,
+				    int *S,
+				    int cr_L,
+				    gft::sImage32 *P,
+				    gft::sImage32 *label,
+				    gft::sAdjRel *A);
+
+void HL_OIFT_Closeness_Algorithm(gft::sLayeredGraph *lg,
+				 int Wmax, int *S, int *L, int *hr,
+				 int cr_L,
+				 gft::sImage32 *C,
+				 gft::sImage32 *P,
+				 gft::sAdjRel *A);
+
+
+
+#endif
